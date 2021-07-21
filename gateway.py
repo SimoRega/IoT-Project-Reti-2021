@@ -16,27 +16,32 @@ print('Listening for devices')
 
 # Waiting devices's detections
 ipAlreadyListened=list()
-while len(ipAlreadyListened)<4:
-    data, address = socket_device.recvfrom(1024)
-    if address not in ipAlreadyListened:
-        ipAlreadyListened.append(address)
-        
-        
-        
-        
-        indexDevice=len(ipAlreadyListened)+1
-        
-        print(""+str(indexDevice)+"° Device = "+address)
-        
-        
-        
-        message = message + data.decode("utf8") + '\n'
-        time.sleep(2)
-        messageReply = "Detection arrived"
-        socket_device.sendto(messageReply.encode(), address)
+try:
+    while len(ipAlreadyListened)<4:
+        data, address = socket_device.recvfrom(1024)
+        if address not in ipAlreadyListened:
+            ipAlreadyListened.append(address)
+            
+            
+            
+            
+            indexDevice=len(ipAlreadyListened)+1
+            
+            print(""+str(indexDevice)+"° Device = "+address)
+            
+            
+            
+            message = message + data.decode("utf8") + '\n'
+            time.sleep(2)
+            messageReply = "Detection arrived"
+            socket_device.sendto(messageReply.encode(), address)
+except Exception as e:
+    print(e)
+finally:
+    socket_device.close()
+    
 
     
-socket_device.close()
 print("Detections arrived. Open connection interface 10.10.10.0")
 
 # Device detections have arrived and sending everything to the cloud

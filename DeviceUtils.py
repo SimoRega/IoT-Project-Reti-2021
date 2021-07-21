@@ -7,6 +7,27 @@ Created on Wed Jul 21 15:34:46 2021
 
 from socket import *
 import time
+from random import *
+
+
+
+def getRandomMeasures(q):
+    filePath="Data/DataDevice"
+    for i in range(4):
+        temp=filePath+str(i)+".txt"
+        dataRandom=generateData(q)   
+        with open(temp,"w") as f:
+            f.write(dataRandom)   
+
+def generateData(q):
+    output=""
+    temp=0
+    offset=(24/q)-1
+    for x in range(q):
+        line= ("{}:00 - {} - {}%\n".format(randint(0+temp,1+temp),randint(25, 45),randint(15, 60)))
+        temp+=offset
+        output+=line
+    return output
 
 def fakeSleep(timestamp):
     for x in range(timestamp-1):

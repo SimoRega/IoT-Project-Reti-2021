@@ -12,6 +12,8 @@ deviceIP = "192.168.1.3"
 filePath = "DataDevice2.txt"
 gatewayAddress = ("localhost", 6969)
 
+#Generate random measures, param = quantity
+dev.getRandomMeasures(4)
 #Obtain the data from the file
 message = dev.getDataFromFile(deviceIP, filePath)
 #Sending the data to the gateway
