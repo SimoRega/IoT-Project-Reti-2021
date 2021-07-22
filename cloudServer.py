@@ -5,11 +5,10 @@ Created on Wed Jul 21 15:39:31 2021
 @author: Simone
 """
 
-import socket as sk
+from socket import *
 
 def connectToGateway():
-    # TCP Server socket
-    serverSocket = sk.socket(sk.AF_INET, sk.SOCK_STREAM)
+    serverSocket = socket(AF_INET, SOCK_STREAM)
     # Bind Socket to port & ip
     serverSocket.bind(("localhost", serverPort))
     
@@ -21,15 +20,21 @@ def connectToGateway():
     # Waiting Gateway connection
     gatewayConnection, address = serverSocket.accept()
     print("Gateway connected!")
-    print("Detections")
-    message = gatewayConnection.recv(bufferSize)
-    print(message.decode("utf8"))
-    gatewayConnection.send(("Ok, detections received!").encode())
-    gatewayConnection.close()
-    serverSocket.close()
+    try:
+        # TCP Server socket
+        print("All the measures from devices down here :\n")
+        message = gatewayConnection.recv(bufferSize)
+        print(message.decode("utf8"))
+        gatewayConnection.send(("Ok, measures received!").encode())       
+    except Exception as e:
+        print(e)
+    finally:
+        gatewayConnection.close()
+        serverSocket.close()
+        
 
-# TCP Server port and ip
-serverPort = 8002
+#---CLOUDSERVER---#
+serverPort = 6942
 serverIp = '10.10.10.2'
 bufferSize = 4096
 connectToGateway()

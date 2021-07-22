@@ -8,8 +8,7 @@ Created on Wed Jul 21 15:34:46 2021
 from socket import *
 import time
 from random import *
-
-
+from AddressTools import *
 
 def getRandomMeasures(q):
     filePath="Data/DataDevice"
@@ -29,17 +28,9 @@ def generateData(q):
         output+=line
     return output
 
-def fakeSleep(timestamp):
-    for x in range(timestamp-1):
-        time.sleep(1)
-        print(".",end="")
-    time.sleep(1)
-    print(".")
-
 def getDataFromFile(device_ip, fileName):
     filePath = "Data/" + fileName
-    print("Reading the measures from file, please wait",end="")
-    fakeSleep(3)
+    print("Reading the measures from file, please wait")
 
     with open(filePath, "r") as f:
         output = f.read();
@@ -52,21 +43,25 @@ def getDataFromFile(device_ip, fileName):
     return output
     
 # Send info to Gatway
-def sendDataToGateway(gateway_address, message):
+def sendDataToGateway(deviceIP,deviceSubnet,gateway_address, message):
+    ip=deviceIP
+    subnet=deviceSubnet
+    
+    myAddTool= AddressTools(ip,subnet)
+    outputToGateway= myAddTool.getAddressEncoded()+message.encode("utf-8")
+    
     # Create the UDP socket
     connection_socket = socket(AF_INET, SOCK_DGRAM)
     buffer = 1024
     try:
-        print("Sending data to Gateway on interface 192.168.1.0",end="")
-        fakeSleep(3)
-        initialTime = time.time()
+        print("Sending data to Gateway on interface 192.168.1.0")
+        initialTime = time.perf_counter()
         
-        connection_socket.sendto(message.encode(), gateway_address)
+        connection_socket.sendto(outputToGateway, gateway_address)
         print("Waiting the Gateway response...")
         data, server = connection_socket.recvfrom(buffer)
         # Get the elapsed time from the start
-        elapsedTime = round( time.time() - initialTime, 3)
-        time.sleep(2)
+        elapsedTime = round(time.perf_counter() - initialTime,3)
         print("Received Message: {}" .format(data.decode("utf8")))
         print("UDP connection took {} seconds with buffer size = {}" .format(elapsedTime, buffer))
     except Exception as e:

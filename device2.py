@@ -9,6 +9,7 @@ import DeviceUtils as dev
 
 #Constants
 deviceIP = "192.168.1.3"
+deviceSubnet= "255.255.255.0"
 filePath = "DataDevice2.txt"
 gatewayAddress = ("localhost", 6969)
 
@@ -17,4 +18,4 @@ dev.getRandomMeasures(4)
 #Obtain the data from the file
 message = dev.getDataFromFile(deviceIP, filePath)
 #Sending the data to the gateway
-dev.sendDataToGateway(gatewayAddress, message)
+dev.sendDataToGateway(deviceIP,deviceSubnet,gatewayAddress, message)
