@@ -14,7 +14,7 @@
 
 \title{Relazione per il progetto di\\``Programmazione di Reti''}
 
-\author{Simone Rega}
+\author{Simone Rega \\ (0000915995)}
 \date{\today}
 
 
@@ -40,6 +40,10 @@
 	
 	Per questa connessione client-server viene utilizzato un protocollo UDP.
 	
+	\begin{figure}[!htb]
+		\centering{\includegraphics[width=\textwidth]{img/device.png}}
+	\end{figure}
+	
 	I quattro client IoT sono stati realizzati separatamente \textit{(Device1.py, Device2.py, Device3.py, Device4.py)} i quali usufruiscono di due classi utility: DeviceUtils e AddressTools.
 	
 	Le funzioni principali di DeviceUtils sono:
@@ -60,10 +64,32 @@
 	
 	Il Gateway è stato realizzato nel modulo Gateway.py, usufruendo delle librerie socket e time.
 	
+	\begin{figure}[!htb]
+		\centering{\includegraphics[width=\textwidth]{img/startgateway.png}}
+		\caption{Metodo che fa partire il gateway e lo mette in ascolto dei socket IoT}
+	\end{figure}
+
+	\begin{figure}[!htb]
+		\centering{\includegraphics[width=\textwidth]{img/senttocloud.png}}
+		\caption{Metodo che manda i dati al Cloud Server}
+	\end{figure}	
+	
 	
 	\subsection{Cloud Server}
 	Il Cloud Server apre semplicemente una connessione TCP cpn il Gateway sull'interfaccia 10.10.10.0, mettendosi in ascolto e aspettando la ricezione del messaggio del Gateway contenente i dati delle rilevazioni.
 	
-	\chapter{Spiegazione dettagliata delle Funzionalità}
+	\begin{figure}[!htb]
+		\centering{\includegraphics[width=\textwidth]{img/cloud.png}}
+	\end{figure}
+	
+	\chapter{Spiegazione dettagliata del Funzionamento}
+	
+	\begin{itemize}
+		\item\textbf{ 1° Passo}: Avviamo il Gateway e il Cloud Server che aspettano entrambi in ascolto sulla propria interfaccia che qualcuno gli invii dei dati
+		\item \textbf{2° Passo}: Avviamo i 4 Device IoT che leggono le misure rilevate e le inviano al Gateway, indicando anche il tempo impiegato per la connessione UDP e il buffer utilizzato
+		\item \textbf{3° Passo}: Una volta fatti partire tutti i moduli pyton, il Gateway riceverà le misure dei quattro Device IoT (è presente un controllo che non permette ai Device di mandare più volte la misura lo stesso giorno, in modo da poter leggere tutti e quattro i socket). Alla fine il Gateway stesso procederà a inviare al Cloud Server, tramite una connessione TCP, tutte le misure indicando anche il tempo e la dimensione del Buffer.
+	\end{itemize}
+	
+	
 
 \end{document}
