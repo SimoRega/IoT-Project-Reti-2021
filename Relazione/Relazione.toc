@@ -1,0 +1,8 @@
+\babel@toc {italian}{}
+\babel@toc {italian}{}
+\contentsline {chapter}{\numberline {1}Introduzione}{2}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Descrizione Architetturale}{3}{chapter.2}%
+\contentsline {subsection}{\numberline {2.0.1}IoT Devices}{3}{subsection.2.0.1}%
+\contentsline {subsection}{\numberline {2.0.2}Gateway}{4}{subsection.2.0.2}%
+\contentsline {subsection}{\numberline {2.0.3}Cloud Server}{4}{subsection.2.0.3}%
+\contentsline {chapter}{\numberline {3}Spiegazione dettagliata delle Funzionalità}{5}{chapter.3}%

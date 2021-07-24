@@ -7,10 +7,10 @@ Created on Wed Jul 21 21:23:48 2021
 
 class AddressTools:
     def __address_splitter(self, ip):
-        octets = []
-        for octet in ip.split("."):
-            octets.append(int(octet))
-        return octets
+        bytesList = []
+        for x in ip.split("."):
+            bytesList.append(int(x))
+        return bytesList
 
     def __init__(self, ip, subnet):
         self.ip = ip
@@ -21,10 +21,10 @@ class AddressTools:
     def getAddressEncoded(self):
         return bytes(self.ip_octets) + bytes(self.subnet_octets)
 
-    def convertBytesToIP(ip_bytes, subnet_bytes):
+    def convertBytesToIP(ipBytes, subnetBytes):
         ipTemp = ''
         subnetTemp = ''
         for i in range(4):
-            ipTemp += str(ip_bytes[i]) + ('.' if i < 3 else '')
-            subnetTemp += str(subnet_bytes[i]) + ('.' if i < 3 else '')
+            ipTemp += str(ipBytes[i]) + ('.' if i < 3 else '')
+            subnetTemp += str(subnetBytes[i]) + ('.' if i < 3 else '')
         return AddressTools(ipTemp, subnetTemp)

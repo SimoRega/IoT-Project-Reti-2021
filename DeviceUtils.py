@@ -28,14 +28,12 @@ def generateData(q):
         output+=line
     return output
 
-def getDataFromFile(device_ip, fileName):
-    filePath = "Data/" + fileName
+def getDataFromFile(filePath):
+    fileTemp = "Data/" + filePath
     print("Reading the measures from file, please wait")
 
-    with open(filePath, "r") as f:
+    with open(fileTemp, "r") as f:
         output = f.read();
-    for line in output:
-        line= "" + device_ip + " = " + line + "\n"
 
     print("Done! Here we have the measures :\n")
     print(output) 
@@ -43,7 +41,7 @@ def getDataFromFile(device_ip, fileName):
     return output
     
 # Send info to Gatway
-def sendDataToGateway(deviceIP,deviceSubnet,gateway_address, message):
+def sendDataToGateway(deviceIP,deviceSubnet,gatewayAddress, message):
     ip=deviceIP
     subnet=deviceSubnet
     
@@ -57,7 +55,7 @@ def sendDataToGateway(deviceIP,deviceSubnet,gateway_address, message):
         print("Sending data to Gateway on interface 192.168.1.0")
         initialTime = time.perf_counter()
         
-        connection_socket.sendto(outputToGateway, gateway_address)
+        connection_socket.sendto(outputToGateway, gatewayAddress)
         print("Waiting the Gateway response...")
         data, server = connection_socket.recvfrom(buffer)
         # Get the elapsed time from the start
